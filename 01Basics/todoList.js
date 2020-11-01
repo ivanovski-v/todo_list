@@ -1,5 +1,3 @@
-//! qa
-
 const initialTasks = [
   {
     _id: "5d2ca9e2e03d40b326596aa7",
@@ -172,6 +170,8 @@ const themes = {
 
   /// UI Methods
   function initialize() {
+    setTheme(localStorage.getItem("theme") || "default");
+
     if (!Object.keys(tasks).length) {
       checkEmptyLabelNeeded();
       return;
@@ -191,10 +191,14 @@ const themes = {
   }
 
   function setTheme(theme) {
-    console.log(Object.entries(themes[theme]));
     Object.entries(themes[theme]).forEach(([key, value]) => {
       document.documentElement.style.setProperty(key, value);
     });
+
+    localStorage.setItem("theme", theme);
+    [...slcTheme.children]
+      .filter((option) => option.value === theme)[0]
+      .setAttribute("selected", "");
   }
 
   function checkEmptyLabelNeeded() {
